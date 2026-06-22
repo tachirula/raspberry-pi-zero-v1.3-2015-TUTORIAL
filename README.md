@@ -288,12 +288,15 @@ Cada vez que conectes la Pi por USB:
 es recomendable ejecutar `export TERM=xterm-256color`, solo si se presenta problemas 
 - Cada vez que se apague el equipo y se requiera volver a conectar a la raspberry, se ejecutan estos comandos:
 
+1.
 `
 sudo ip addr flush dev enp0s20f0u3
 `
+2.
 `
 sudo ip addr add 169.254.0.1/24 dev enp0s20f0u3
 `
+3.
 `
 sudo ip link set enp0s20f0u3 up
 `
