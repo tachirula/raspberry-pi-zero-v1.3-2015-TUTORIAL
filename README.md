@@ -78,7 +78,11 @@ sudo umount /mnt/boot
 
 ---
 
-## Asignar IP fija a la Pi (en la partición raíz)
+¡Perfecto! Así queda la sección **completa y corregida** con los pasos de SSH incluidos. La he integrado de forma lógica y clara.
+
+---
+
+## Asignar IP fija y configurar SSH (en la partición raíz)
 
 ### a) Montar la partición raíz
 ```bash
@@ -108,7 +112,18 @@ EOF
 sudo ln -sf /lib/systemd/system/systemd-networkd.service /mnt/root/etc/systemd/system/multi-user.target.wants/systemd-networkd.service
 ```
 
-### d) Habilitar SSH y forzar IP al arranque (script `rc.local`)
+### d) Forzar autenticación por contraseña en SSH
+```bash
+sudo sed -i 's/^#PasswordAuthentication.*/PasswordAuthentication yes/' /mnt/root/etc/ssh/sshd_config
+sudo sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /mnt/root/etc/ssh/sshd_config
+```
+
+### e) Asegurar que el servicio SSH se inicie al arranque
+```bash
+sudo ln -sf /lib/systemd/system/ssh.service /mnt/root/etc/systemd/system/multi-user.target.wants/ssh.service
+```
+
+### f) Crear script `rc.local` para forzar IP y reiniciar SSH al arranque
 ```bash
 sudo tee /mnt/root/etc/rc.local <<EOF
 #!/bin/sh -e
@@ -120,11 +135,19 @@ sudo chmod +x /mnt/root/etc/rc.local
 sudo ln -sf /lib/systemd/system/rc-local.service /mnt/root/etc/systemd/system/multi-user.target.wants/rc-local.service
 ```
 
-### e) Desmontar y expulsar
+### g) Desmontar y expulsar
 ```bash
 sudo umount /mnt/root
 sudo eject /dev/sda
 ```
+
+---
+
+## Notas importantes
+- **Paso d)**: Es **fundamental** porque, aunque el archivo `ssh` en `/boot` habilita SSH, la autenticación por contraseña puede estar desactivada en `sshd_config`. Forzarla a `yes` evita el error `Permission denied`.
+- **Paso e)**: Asegura que el servicio SSH se levante automáticamente en cada arranque (no siempre ocurre por defecto en imágenes Lite).
+- **Paso f)**: El script `rc.local` asigna la IP estática y reinicia SSH por si el servicio no se inicia correctamente o la IP no se aplica (por ejemplo, si `dhcpcd` falla). Es una capa extra de robustez.
+- **Paso c)**: Es opcional pero recomendable si prefieres `systemd-networkd` sobre `dhcpcd`. Puedes tener ambos coexistiendo sin problemas.
 
 ---
 
