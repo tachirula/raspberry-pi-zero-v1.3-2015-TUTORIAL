@@ -286,6 +286,13 @@ Cada vez que conectes la Pi por USB:
 - Si el PC se reinicia, las reglas `iptables` se pierden; vuelve a ejecutar el paso 7 o guarda las reglas.
 - Algunas terminales pueden tener problemas, PI no las puede reconocer (como por ejemplo Kitty)
 es recomendable ejecutar `export TERM=xterm-256color`, solo si se presenta problemas 
+- Cada vez que se apague el equipo y se requiera volver a conectar a la raspberry, se ejecutan estos comandos:
+
+`
+sudo ip addr flush dev enp0s20f0u3
+sudo ip addr add 169.254.0.1/24 dev enp0s20f0u3
+sudo ip link set enp0s20f0u3 up
+`
 
 ---
 
