@@ -2,7 +2,7 @@
 tutorial para hacerme acordar de como manejar una raspberry pi zero v1.3 del 2015 que no cuenta con conexion wifi ni bluetooth
 
 # TUTORIAL
-¡Excelente idea! Documentar el proceso completo es fundamental. Aquí tienes una guía **limpia y paso a paso** (omitiendo los errores) para conectar una **Raspberry Pi Zero v1.3 (2015) sin WiFi** a Internet a través del puerto USB J10, usando el **modo gadget Ethernet** y compartiendo la conexión de tu PC con Arch Linux.
+Documentar el proceso completo es fundamental en cualquier practica IT. Asi que aqui hay una guía para conectar una **Raspberry Pi Zero v1.3 (2015) sin WiFi** a Internet a través del puerto USB J10, usando el **modo gadget Ethernet** y compartiendo la conexión de la PC con Arch Linux (la distro que estoy usando).
 
 ---
 
