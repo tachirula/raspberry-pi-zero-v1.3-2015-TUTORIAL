@@ -290,7 +290,11 @@ es recomendable ejecutar `export TERM=xterm-256color`, solo si se presenta probl
 
 `
 sudo ip addr flush dev enp0s20f0u3
+`
+`
 sudo ip addr add 169.254.0.1/24 dev enp0s20f0u3
+`
+`
 sudo ip link set enp0s20f0u3 up
 `
 
